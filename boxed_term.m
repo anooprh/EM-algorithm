@@ -4,7 +4,7 @@ function [ log_sigma_mvnpdf ] = boxed_term( xn, params, covvar)
     a = zeros(1, NUM_CLUSTERS);
     max_aj = 0;
     for j=1:NUM_CLUSTERS
-        a(j) = logmvnpdf(xn, params.mu(:,j), covvar(:,:,j));
+        a(j) = logmvnpdf(xn, params.mu(:,j), covvar(:,:,j), params.pi(j));
         if a(j) > max_aj
             max_aj = a(j);
         end

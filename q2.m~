@@ -30,8 +30,7 @@ for k=1:N_Iter
     for i=1:NUM_DATA
         bt = boxed_term(Spikes(:,i), params, covvar);
         for j=1:NUM_CLUSTERS
-             r(j,i) = exp(logmvnpdf(Spikes(:,i), params.mu(:,j), ...
-                 covvar(:,:,j), params.pi(j)));
+             r(j,i) = exp(logmvnpdf(Spikes(:,)));
         end
     end
     
@@ -63,20 +62,16 @@ for k=1:N_Iter
 
     % Evaluation log likelihood
     L = 0;
-%     for j =1:NUM_DATA
-%         L_this = 0;
-%         for i = 1:NUM_CLUSTERS
-% %             L_this = L_this + mvnpdf(Spikes(:,i), params.mu(:,j), ...
-% %                 covvar(:,:,j)) * params.pi(j);
-%             L_this = L_this + exp(logmvnpdf(Spikes(:,j),params.mu(:,i), ...
-%                       covvar(:,:,i), params.pi(i))- ... 
-%                       boxed_term(Spikes(:,j), params, covvar)); 
-%         end
-%         L = L + L_this;
-%     end
-
-    for i=1:NUM_DATA
-        L = L + boxed_term(Spikes(:,i), params, covvar);
+    for j =1:NUM_DATA
+        L_this = 0;
+        for i = 1:NUM_CLUSTERS
+%             L_this = L_this + mvnpdf(Spikes(:,i), params.mu(:,j), ...
+%                 covvar(:,:,j)) * params.pi(j);
+            L_this = L_this + exp(logmvnpdf(Spikes(:,j),params.mu(:,i), ...
+                      covvar(:,:,i), params.pi(i))- ... 
+                      boxed_term(Spikes(:,j), params, covvar)); 
+        end
+        L = L + L_this;
     end
     likelihood(k) = L;
 end
