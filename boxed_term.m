@@ -1,4 +1,5 @@
 function [ bt ] = boxed_term( xn, params, covvar)
+% Computes log(sum over all j, N(xn|mu_j, Sigma_j) * pi_j)
     NUM_CLUSTERS = size(params.mu, 2);
 
     a = zeros(1, NUM_CLUSTERS);
